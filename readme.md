@@ -19,3 +19,7 @@ command
 C:\Windows\System32\inetsrv>appcmd.exe add apppool /name:website2
 for /l %l in (4,1,50) do mkdir c:\....
 
+dir iis:
+
+## window .net core 6 hosting
+https://dotnet.microsoft.com/en-us/download/dotnet/current/runtime (window hosting bundle)
