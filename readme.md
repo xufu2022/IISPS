@@ -23,3 +23,23 @@ dir iis:
 
 ## window .net core 6 hosting
 https://dotnet.microsoft.com/en-us/download/dotnet/current/runtime (window hosting bundle)
+
+## The CmdletBinding attribute
+
+The CmdletBinding attribute is used to turn a function into an advanced function and is placed immediately above a param block. The attribute is used to add extra functionality, such as access to common parameters, control over the impact level, and so on. Scripts are not referred to as advanced scripts, but the same principle applies.
+
+## Common parameters
+With CmdletBinding in place, a script or function may use common parameters. The common 
+parameters are listed here:
+
+-   • Debug
+-   • ErrorAction
+-   • ErrorVariable
+-   • InformationAction
+-   • InformationVariable
+-   • OutVariable
+-   • OutBuffer
+-   • PipelineVariable
+-   • Verbose
+-   • WarningAction
+-   • WarningVariable
