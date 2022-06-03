@@ -24,13 +24,19 @@ Invoke-Command -Session $Session -ScriptBlock {start-Service WMSVC}
 
 ### Replacing the self-signed certificatge
 $servers | ForEach-Object {Copy-Item -Path c:\Remote.company.loc.pfx -Destination "\\$_\c$"}
-Invoke-Command -Session $Sessions {certutil | -p P@ssw0rd -importpfx c:\Remote.company.loc.pfx}
+Invoke-Command -Session $Sessions -ScriptBlock{certutil | -p P@ssw0rd -importpfx c:\Remote.company.loc.pfx}
 $servers | ForEach-Object {Remove-Item -Path "\\$_\c$\Remote.company.loc.pfx"}
-Invoke-Command -Session $Sessions {Import-Module webadministration}
+Invoke-Command -Session $Sessions -ScriptBlock {Import-Module webadministration}
 
-Invoke-Command -Session $Session {$Cert=Get-ChildItem -Path Cert:\LocalMachine\My | where {$_.Subject -like "*company*"}} | Select-Object -ExpandProperty Thumbprint
-Invoke-Command -Session $Session {Remove-Item -Path "IIS:\SslBindings\0.0.0.0!8172"}
+Invoke-Command -Session $Session -ScriptBlock {$Cert=Get-ChildItem -Path Cert:\LocalMachine\My | where {$_.Subject -like "*company*"}} | Select-Object -ExpandProperty Thumbprint
+Invoke-Command -Session $Session -ScriptBlock {Remove-Item -Path "IIS:\SslBindings\0.0.0.0!8172"}
 
-Invoke-Command -Session $Session {Get-Item -Path "cert:\LocalMachine\My\$cert" | New-Item -Path "IIS:\SslBindings\0.0.0.0!8172"}
+Invoke-Command -Session $Session -ScriptBlock {Get-Item -Path "cert:\LocalMachine\My\$cert" | New-Item -Path "IIS:\SslBindings\0.0.0.0!8172"}
 
+
+## get server iis info
+Invoke-Command -Session $Session -ScriptBlock{Get-IISSite}
+Invoke-Command -Session $Session -ScriptBlock{Get-IISSite} | ft Name,PScomputerName, State
+Invoke-Command -Session $Session -ScriptBlock{Get-IISSite | Stop-IISSite} 
+Invoke-Command -Session $Session -ScriptBlock{Get-IISSite | Start-IISSite} | ft Name,PScomputerName, State
 
