@@ -16,4 +16,6 @@ command
 
 ## Create website using Appcmd
 
-C:\Windows\System32\inetsrv>appcmd.exe add apppool /name: website2
+C:\Windows\System32\inetsrv>appcmd.exe add apppool /name:website2
+for /l %l in (4,1,50) do mkdir c:\....
+
